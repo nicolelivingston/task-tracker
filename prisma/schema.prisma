@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Status {
+  todo
+  in_progress
+  done
+}
+
+model Task {
+  id          Int       @id @default(autoincrement())
+  title       String
+  description String?
+  status      Status    @default(todo)
+  createdAt   DateTime  @default(now())
+  // Nullable only so rows created before due dates existed stay valid; new tasks always set it.
+  dueAt       DateTime?
+  // Nullable only so tasks created before accounts existed stay valid; they have no
+  // owner, so no one sees them. New tasks always set it.
+  userId      Int?
+  user        User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model User {
+  id            Int         @id @default(autoincrement())
+  // Stored trimmed and lowercased, so the unique constraint is case-insensitive.
+  email         String      @unique
+  passwordHash  String
+  createdAt     DateTime    @default(now())
+  // Null until the user clicks the link emailed at signup; login is refused until then.
+  emailVerified DateTime?
+  tasks         Task[]
+  tokens        AuthToken[]
+}
+
+enum TokenPurpose {
+  verify_email
+  reset_password
+}
+
+// Single-use links emailed to users. Only a SHA-256 of the token is stored, so a
+// database leak doesn't hand out working links.
+model AuthToken {
+  id        Int          @id @default(autoincrement())
+  tokenHash String       @unique
+  purpose   TokenPurpose
+  expiresAt DateTime
+  createdAt DateTime     @default(now())
+  userId    Int
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, purpose])
+}
