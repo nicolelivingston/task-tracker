@@ -32,7 +32,7 @@ export function VerifyEmailForm({ token }: { token: string }) {
       <p id="form-error" role="alert" className="min-h-5 text-sm text-red-600 dark:text-red-400">
         {state.error}
       </p>
-      <button type="submit" disabled={pending} className={primaryButtonClass}>
+      <button type="submit" disabled={pending} className={`w-full ${primaryButtonClass}`}>
         {pending ? "Confirming…" : "Confirm my email"}
       </button>
     </form>

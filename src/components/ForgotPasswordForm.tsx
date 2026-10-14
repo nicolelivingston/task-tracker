@@ -45,7 +45,7 @@ export function ForgotPasswordForm() {
       <p id="form-error" role="alert" className="min-h-5 text-sm text-red-600 dark:text-red-400">
         {state.error}
       </p>
-      <button type="submit" disabled={pending} className={primaryButtonClass}>
+      <button type="submit" disabled={pending} className={`w-full ${primaryButtonClass}`}>
         {pending ? "Sending…" : "Send reset link"}
       </button>
     </form>

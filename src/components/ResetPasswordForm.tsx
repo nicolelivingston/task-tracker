@@ -1,11 +1,11 @@
 "use client";
 
 import { useActionState } from "react";
+import { PasswordInput } from "@/components/PasswordInput";
 import Link from "next/link";
 import { resetPassword, type TokenActionState } from "@/app/auth-actions";
 import {
   cardClass,
-  fieldClass,
   labelClass,
   linkClass,
   primaryButtonClass,
@@ -39,16 +39,15 @@ export function ResetPasswordForm({ token }: { token: string }) {
         <label htmlFor="password" className={labelClass}>
           New password
         </label>
-        <input
+        <PasswordInput
           id="password"
           name="password"
-          type="password"
+          label="new password"
           required
           minLength={8}
           autoComplete="new-password"
           aria-invalid={state.error ? true : undefined}
           aria-describedby={state.error ? "password-hint form-error" : "password-hint"}
-          className={fieldClass}
         />
         <p id="password-hint" className="text-xs text-zinc-500 dark:text-zinc-400">
           At least 8 characters.
@@ -58,21 +57,20 @@ export function ResetPasswordForm({ token }: { token: string }) {
         <label htmlFor="confirmPassword" className={labelClass}>
           Confirm new password
         </label>
-        <input
+        <PasswordInput
           id="confirmPassword"
           name="confirmPassword"
-          type="password"
+          label="confirm new password"
           required
           autoComplete="new-password"
           aria-invalid={state.error ? true : undefined}
           aria-describedby={state.error ? "form-error" : undefined}
-          className={fieldClass}
         />
       </div>
       <p id="form-error" role="alert" className="min-h-5 text-sm text-red-600 dark:text-red-400">
         {state.error}
       </p>
-      <button type="submit" disabled={pending} className={primaryButtonClass}>
+      <button type="submit" disabled={pending} className={`w-full ${primaryButtonClass}`}>
         {pending ? "Saving…" : "Set new password"}
       </button>
     </form>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { PasswordInput } from "@/components/PasswordInput";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
@@ -66,15 +67,14 @@ export function LoginForm() {
           <label htmlFor="password" className={labelClass}>
             Password
           </label>
-          <input
+          <PasswordInput
             id="password"
             name="password"
-            type="password"
+            label="password"
             required
             autoComplete="current-password"
             aria-invalid={state.error ? true : undefined}
             aria-describedby={state.error ? "form-error" : undefined}
-            className={fieldClass}
           />
           <p className="text-right text-sm">
             <Link href="/forgot-password" className={linkClass}>
@@ -86,7 +86,7 @@ export function LoginForm() {
         <p id="form-error" role="alert" className="min-h-5 text-sm text-red-600 dark:text-red-400">
           {state.error}
         </p>
-        <button type="submit" disabled={pending} className={primaryButtonClass}>
+        <button type="submit" disabled={pending} className={`w-full ${primaryButtonClass}`}>
           {pending ? "Signing in…" : "Sign in"}
         </button>
       </form>

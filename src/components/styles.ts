@@ -4,8 +4,22 @@ export const fieldClass =
 export const labelClass =
   "block text-sm font-medium text-zinc-700 dark:text-zinc-300";
 
-export const primaryButtonClass =
-  "w-full rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:focus-visible:outline-indigo-400 disabled:cursor-not-allowed disabled:opacity-60";
+const focusRing =
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:focus-visible:outline-indigo-400";
+
+const disabled = "disabled:cursor-not-allowed disabled:opacity-60";
+
+// Hover darkens: indigo-500 would drop white text below 4.5:1.
+export const primaryButtonClass = `rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700 ${focusRing} ${disabled}`;
+
+// Task status actions (Start / Mark done / Reopen).
+export const subtleButtonClass = `rounded-lg bg-zinc-100 px-3.5 py-1.5 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700 ${focusRing} ${disabled}`;
+
+// Low-emphasis actions: Edit, Delete, Cancel.
+export const ghostButtonClass = `rounded-lg px-2.5 py-1.5 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100 ${focusRing} ${disabled}`;
+
+// Confirms a destructive action.
+export const dangerButtonClass = `rounded-lg bg-red-600 px-3.5 py-1.5 text-sm font-medium text-white transition-colors hover:bg-red-700 ${focusRing} ${disabled}`;
 
 // The shell for every form and message card, matching the task list cards.
 export const cardClass =
