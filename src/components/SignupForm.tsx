@@ -1,9 +1,10 @@
 "use client";
 
 import { useActionState } from "react";
+import { PasswordInput } from "@/components/PasswordInput";
 import { signup } from "@/app/auth-actions";
 import {
-  authCardClass,
+  cardClass,
   fieldClass,
   labelClass,
   primaryButtonClass,
@@ -14,7 +15,7 @@ export function SignupForm() {
 
   if (state.sent) {
     return (
-      <div role="status" className={authCardClass}>
+      <div role="status" className={cardClass}>
         <h2 className="font-medium">Check your email</h2>
         <p className="text-sm text-zinc-600 dark:text-zinc-400">
           We sent a confirmation link to{" "}
@@ -26,7 +27,7 @@ export function SignupForm() {
   }
 
   return (
-    <form action={formAction} className={authCardClass}>
+    <form action={formAction} className={cardClass}>
       <div className="space-y-1.5">
         <label htmlFor="email" className={labelClass}>
           Email
@@ -38,6 +39,8 @@ export function SignupForm() {
           required
           autoComplete="email"
           defaultValue={state.values?.email}
+          aria-invalid={state.error ? true : undefined}
+          aria-describedby={state.error ? "form-error" : undefined}
           className={fieldClass}
         />
       </div>
@@ -46,15 +49,15 @@ export function SignupForm() {
         <label htmlFor="password" className={labelClass}>
           Password
         </label>
-        <input
+        <PasswordInput
           id="password"
           name="password"
-          type="password"
+          label="password"
           required
           minLength={8}
           autoComplete="new-password"
-          aria-describedby="password-hint"
-          className={fieldClass}
+          aria-invalid={state.error ? true : undefined}
+          aria-describedby={state.error ? "password-hint form-error" : "password-hint"}
         />
         <p id="password-hint" className="text-xs text-zinc-500 dark:text-zinc-400">
           At least 8 characters.
@@ -65,20 +68,21 @@ export function SignupForm() {
         <label htmlFor="confirmPassword" className={labelClass}>
           Confirm password
         </label>
-        <input
+        <PasswordInput
           id="confirmPassword"
           name="confirmPassword"
-          type="password"
+          label="confirm password"
           required
           autoComplete="new-password"
-          className={fieldClass}
+          aria-invalid={state.error ? true : undefined}
+          aria-describedby={state.error ? "form-error" : undefined}
         />
       </div>
 
-      <p role="alert" className="min-h-5 text-sm text-red-600 dark:text-red-400">
+      <p id="form-error" role="alert" className="min-h-5 text-sm text-red-600 dark:text-red-400">
         {state.error}
       </p>
-      <button type="submit" disabled={pending} className={primaryButtonClass}>
+      <button type="submit" disabled={pending} className={`w-full ${primaryButtonClass}`}>
         {pending ? "Creating account…" : "Create account"}
       </button>
     </form>

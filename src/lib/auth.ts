@@ -1,4 +1,5 @@
 import bcrypt from "bcryptjs";
+import { connection } from "next/server";
 import { getServerSession, type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { prisma } from "@/lib/prisma";
@@ -48,11 +49,19 @@ export const authOptions: NextAuthOptions = {
 };
 
 /**
- * The signed-in user's id, or null. Reads the request's cookies, so under
+ * The current session, or null. Reads the request's cookies, so under
  * Cache Components callers must render behind a <Suspense> boundary.
  */
+export async function getSession() {
+  // getServerSession generates a CSRF token with randomBytes before it touches
+  // cookies, which Cache Components rejects during prerender. Defer to request time first.
+  await connection();
+  return getServerSession(authOptions);
+}
+
+/** The signed-in user's id, or null. Same <Suspense> requirement as getSession. */
 export async function getUserId(): Promise<number | null> {
-  const session = await getServerSession(authOptions);
+  const session = await getSession();
   const id = Number(session?.user?.id);
   return Number.isInteger(id) ? id : null;
 }

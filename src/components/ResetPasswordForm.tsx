@@ -1,11 +1,11 @@
 "use client";
 
 import { useActionState } from "react";
+import { PasswordInput } from "@/components/PasswordInput";
 import Link from "next/link";
 import { resetPassword, type TokenActionState } from "@/app/auth-actions";
 import {
-  authCardClass,
-  fieldClass,
+  cardClass,
   labelClass,
   linkClass,
   primaryButtonClass,
@@ -19,7 +19,7 @@ export function ResetPasswordForm({ token }: { token: string }) {
 
   if (state.done) {
     return (
-      <div role="status" className={authCardClass}>
+      <div role="status" className={cardClass}>
         <h2 className="font-medium">Password updated</h2>
         <p className="text-sm text-zinc-600 dark:text-zinc-400">
           You can now{" "}
@@ -33,39 +33,44 @@ export function ResetPasswordForm({ token }: { token: string }) {
   }
 
   return (
-    <form action={formAction} className={authCardClass}>
+    <form action={formAction} className={cardClass}>
       <input type="hidden" name="token" value={token} />
       <div className="space-y-1.5">
         <label htmlFor="password" className={labelClass}>
           New password
         </label>
-        <input
+        <PasswordInput
           id="password"
           name="password"
-          type="password"
+          label="new password"
           required
           minLength={8}
           autoComplete="new-password"
-          className={fieldClass}
+          aria-invalid={state.error ? true : undefined}
+          aria-describedby={state.error ? "password-hint form-error" : "password-hint"}
         />
+        <p id="password-hint" className="text-xs text-zinc-500 dark:text-zinc-400">
+          At least 8 characters.
+        </p>
       </div>
       <div className="space-y-1.5">
         <label htmlFor="confirmPassword" className={labelClass}>
           Confirm new password
         </label>
-        <input
+        <PasswordInput
           id="confirmPassword"
           name="confirmPassword"
-          type="password"
+          label="confirm new password"
           required
           autoComplete="new-password"
-          className={fieldClass}
+          aria-invalid={state.error ? true : undefined}
+          aria-describedby={state.error ? "form-error" : undefined}
         />
       </div>
-      <p role="alert" className="min-h-5 text-sm text-red-600 dark:text-red-400">
+      <p id="form-error" role="alert" className="min-h-5 text-sm text-red-600 dark:text-red-400">
         {state.error}
       </p>
-      <button type="submit" disabled={pending} className={primaryButtonClass}>
+      <button type="submit" disabled={pending} className={`w-full ${primaryButtonClass}`}>
         {pending ? "Saving…" : "Set new password"}
       </button>
     </form>

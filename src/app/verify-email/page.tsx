@@ -30,7 +30,7 @@ async function VerifyForm({ searchParams }: Pick<PageProps<"/verify-email">, "se
 
 export default function VerifyEmailPage(props: PageProps<"/verify-email">) {
   return (
-    <main className="mx-auto w-full max-w-sm flex-1 px-4 py-16 sm:py-24">
+    <main className="mx-auto w-full max-w-sm flex-1 px-4 py-12 sm:py-16">
       <h1 className="text-2xl font-semibold tracking-tight">Confirm your email</h1>
       <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
         One last step to activate your account.

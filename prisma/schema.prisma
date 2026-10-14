@@ -24,6 +24,9 @@ model Task {
   createdAt   DateTime  @default(now())
   // Nullable only so rows created before due dates existed stay valid; new tasks always set it.
   dueAt       DateTime?
+  // Set when the task moves to done, cleared when it's reopened. Null for tasks
+  // finished before this was tracked.
+  completedAt DateTime?
   // Nullable only so tasks created before accounts existed stay valid; they have no
   // owner, so no one sees them. New tasks always set it.
   userId      Int?

@@ -6,7 +6,7 @@ export const metadata: Metadata = { title: "Sign up · Task Tracker" };
 
 export default function SignupPage() {
   return (
-    <main className="mx-auto w-full max-w-sm flex-1 px-4 py-16 sm:py-24">
+    <main className="mx-auto w-full max-w-sm flex-1 px-4 py-12 sm:py-16">
       <h1 className="text-2xl font-semibold tracking-tight">Create an account</h1>
       <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
         Your tasks are private to your account.
@@ -18,7 +18,7 @@ export default function SignupPage() {
         Already have an account?{" "}
         <Link
           href="/login"
-          className="font-medium text-indigo-600 hover:underline dark:text-indigo-400"
+          className="font-medium text-indigo-600 underline underline-offset-2 hover:decoration-2 dark:text-indigo-400"
         >
           Sign in
         </Link>
