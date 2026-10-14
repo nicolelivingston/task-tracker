@@ -3,7 +3,7 @@
 import { useActionState } from "react";
 import Link from "next/link";
 import { verifyEmail, type TokenActionState } from "@/app/auth-actions";
-import { authCardClass, linkClass, primaryButtonClass } from "@/components/styles";
+import { cardClass, linkClass, primaryButtonClass } from "@/components/styles";
 
 export function VerifyEmailForm({ token }: { token: string }) {
   const [state, formAction, pending] = useActionState<TokenActionState, FormData>(
@@ -13,7 +13,7 @@ export function VerifyEmailForm({ token }: { token: string }) {
 
   if (state.done) {
     return (
-      <div role="status" className={authCardClass}>
+      <div role="status" className={cardClass}>
         <h2 className="font-medium">Email confirmed</h2>
         <p className="text-sm text-zinc-600 dark:text-zinc-400">
           Your account is ready.{" "}
@@ -27,9 +27,9 @@ export function VerifyEmailForm({ token }: { token: string }) {
   }
 
   return (
-    <form action={formAction} className={authCardClass}>
+    <form action={formAction} className={cardClass}>
       <input type="hidden" name="token" value={token} />
-      <p role="alert" className="min-h-5 text-sm text-red-600 dark:text-red-400">
+      <p id="form-error" role="alert" className="min-h-5 text-sm text-red-600 dark:text-red-400">
         {state.error}
       </p>
       <button type="submit" disabled={pending} className={primaryButtonClass}>

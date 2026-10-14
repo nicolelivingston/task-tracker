@@ -30,7 +30,7 @@ async function ResetForm({ searchParams }: Pick<PageProps<"/reset-password">, "s
 
 export default function ResetPasswordPage(props: PageProps<"/reset-password">) {
   return (
-    <main className="mx-auto w-full max-w-sm flex-1 px-4 py-16 sm:py-24">
+    <main className="mx-auto w-full max-w-sm flex-1 px-4 py-12 sm:py-16">
       <h1 className="text-2xl font-semibold tracking-tight">Choose a new password</h1>
       <div className="mt-8">
         <Suspense fallback={null}>

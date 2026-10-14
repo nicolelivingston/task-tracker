@@ -12,7 +12,7 @@ export function ResendVerification({ email }: { email: string }) {
   return (
     <form
       action={formAction}
-      className="mt-4 space-y-2 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-200"
+      className="mt-4 space-y-2 rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-200"
     >
       <p>
         Your email address hasn&apos;t been confirmed yet. Check your inbox for
@@ -25,7 +25,7 @@ export function ResendVerification({ email }: { email: string }) {
         <button
           type="submit"
           disabled={pending}
-          className="font-medium underline disabled:opacity-60"
+          className="rounded-sm font-medium underline underline-offset-2 hover:decoration-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-700 disabled:opacity-60 dark:focus-visible:outline-amber-300"
         >
           {pending ? "Sending…" : "Send a new link"}
         </button>

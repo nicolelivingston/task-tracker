@@ -7,8 +7,9 @@ export const labelClass =
 export const primaryButtonClass =
   "w-full rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:focus-visible:outline-indigo-400 disabled:cursor-not-allowed disabled:opacity-60";
 
-export const authCardClass =
-  "space-y-4 rounded-xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-950";
+// The shell for every form and message card, matching the task list cards.
+export const cardClass =
+  "space-y-4 rounded-2xl border border-zinc-200/80 bg-white p-5 shadow-sm shadow-zinc-900/5 dark:border-zinc-800 dark:bg-zinc-950";
 
 export const linkClass =
   "font-medium text-indigo-600 underline underline-offset-2 hover:decoration-2 dark:text-indigo-400";
