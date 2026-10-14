@@ -86,9 +86,14 @@ export async function cycleTaskStatus(id: number) {
   if (!task) return;
 
   // Conditional on the status we just read, so two quick clicks can't skip a step.
+  // Stamp the completion time on the way to done; reopening clears it.
+  const next = NEXT_STATUS[task.status];
   await prisma.task.updateMany({
     where: { id, userId, status: task.status },
-    data: { status: NEXT_STATUS[task.status] },
+    data: {
+      status: next,
+      completedAt: next === Status.done ? new Date() : null,
+    },
   });
 
   revalidatePath("/");

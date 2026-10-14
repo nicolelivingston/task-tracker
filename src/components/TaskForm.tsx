@@ -41,6 +41,7 @@ export function TaskForm() {
           defaultValue={state.values?.title}
           placeholder="What needs doing?"
           aria-invalid={state.error ? true : undefined}
+          aria-describedby={state.error ? "task-error" : undefined}
           className={fieldClass}
         />
       </div>
@@ -51,7 +52,7 @@ export function TaskForm() {
           className="block text-sm font-medium text-zinc-700 dark:text-zinc-300"
         >
           Description{" "}
-          <span className="font-normal text-zinc-400 dark:text-zinc-500">
+          <span className="font-normal text-zinc-500 dark:text-zinc-400">
             (optional)
           </span>
         </label>
@@ -85,8 +86,8 @@ export function TaskForm() {
 
       <div className="flex items-center justify-between gap-4">
         <p
+          id="task-error"
           role="alert"
-          aria-live="polite"
           className="text-sm text-red-600 dark:text-red-400"
         >
           {state.error}
@@ -94,7 +95,7 @@ export function TaskForm() {
         <button
           type="submit"
           disabled={pending}
-          className="shrink-0 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:cursor-not-allowed disabled:opacity-60"
+          className="shrink-0 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:focus-visible:outline-indigo-400 disabled:cursor-not-allowed disabled:opacity-60"
         >
           {pending ? "Adding…" : "Add task"}
         </button>

@@ -142,18 +142,22 @@ export async function TaskList() {
                     </span>
                   </p>
                 )}
-                <p className="text-xs text-zinc-400 dark:text-zinc-500">
-                  Created{" "}
-                  <time dateTime={task.createdAt.toISOString()}>
-                    {dateFormat.format(task.createdAt)}
-                  </time>
-                </p>
+                {done && task.completedAt && (
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400">
+                    Completed{" "}
+                    <time dateTime={task.completedAt.toISOString()}>
+                      {dateFormat.format(task.completedAt)}
+                    </time>
+                  </p>
+                )}
               </div>
 
               <form action={cycleTaskStatus.bind(null, task.id)}>
+                {/* The title in the name tells screen reader users which "Start" this is. */}
                 <button
                   type="submit"
-                  className="shrink-0 rounded-lg bg-zinc-100 px-3.5 py-1.5 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700"
+                  aria-label={`${style.action}: ${task.title}`}
+                  className="shrink-0 rounded-lg bg-zinc-100 px-3.5 py-1.5 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:focus-visible:outline-indigo-400 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700"
                 >
                   {style.action}
                 </button>
@@ -168,13 +172,18 @@ export async function TaskList() {
 
 export function TaskListSkeleton() {
   return (
-    <ul className="space-y-4" aria-hidden>
-      {[0, 1, 2].map((i) => (
-        <li
-          key={i}
-          className="h-36 animate-pulse rounded-2xl border border-zinc-200/80 bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900"
-        />
-      ))}
-    </ul>
+    <>
+      <p role="status" className="sr-only">
+        Loading tasks…
+      </p>
+      <ul className="space-y-4" aria-hidden>
+        {[0, 1, 2].map((i) => (
+          <li
+            key={i}
+            className="h-36 animate-pulse rounded-2xl border border-zinc-200/80 bg-zinc-100 motion-reduce:animate-none dark:border-zinc-800 dark:bg-zinc-900"
+          />
+        ))}
+      </ul>
+    </>
   );
 }
