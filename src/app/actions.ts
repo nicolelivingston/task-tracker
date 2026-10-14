@@ -16,6 +16,8 @@ const MAX_DESCRIPTION = 2000;
 
 // What <input type="datetime-local"> submits: "YYYY-MM-DDTHH:mm" (seconds optional).
 const DATETIME_LOCAL = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?$/;
+// What Date.prototype.toISOString() produces.
+const ISO_UTC = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
 
 export async function createTask(
   _prev: CreateTaskState,
@@ -36,9 +38,14 @@ export async function createTask(
 
   if (!title) return { error: "Title is required.", values };
   if (!dueAtRaw) return { error: "Due date and time are required.", values };
-  // The value carries no timezone, so it is read in the server's local zone,
-  // the same zone TaskList formats it in.
-  const dueAt = DATETIME_LOCAL.test(dueAtRaw) ? new Date(dueAtRaw) : null;
+  // TaskForm converts the zoneless input to an exact moment in the browser. If a
+  // caller sends only the raw value, read it in the server's zone (UTC on Vercel).
+  const dueAtIso = String(formData.get("dueAtIso") ?? "");
+  const dueAt = ISO_UTC.test(dueAtIso)
+    ? new Date(dueAtIso)
+    : DATETIME_LOCAL.test(dueAtRaw)
+      ? new Date(dueAtRaw)
+      : null;
   if (!dueAt || Number.isNaN(dueAt.getTime())) {
     return { error: "Due date and time are not valid.", values };
   }

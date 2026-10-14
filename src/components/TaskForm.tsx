@@ -9,10 +9,21 @@ const initialState: CreateTaskState = {};
 export function TaskForm() {
   const [state, formAction, pending] = useActionState(createTask, initialState);
 
+  // datetime-local has no zone, and only the browser knows the user's, so pin
+  // the moment here. The raw value is still sent so errors can echo it back.
+  function submit(formData: FormData) {
+    const raw = formData.get("dueAt");
+    const dueAt = typeof raw === "string" && raw ? new Date(raw) : null;
+    if (dueAt && !Number.isNaN(dueAt.getTime())) {
+      formData.set("dueAtIso", dueAt.toISOString());
+    }
+    formAction(formData);
+  }
+
   return (
     <form
-      action={formAction}
-      className="space-y-4 rounded-xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-950"
+      action={submit}
+      className="space-y-4 rounded-2xl border border-zinc-200/80 bg-white p-5 shadow-sm shadow-zinc-900/5 dark:border-zinc-800 dark:bg-zinc-950"
     >
       <div className="space-y-1.5">
         <label
